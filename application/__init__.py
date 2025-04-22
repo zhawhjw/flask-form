@@ -6,6 +6,7 @@ from flask_bootstrap import Bootstrap5
 from flask_migrate import Migrate
 from flask_wtf import CSRFProtect
 
+
 from application.database import db
 import config
 from application.bp.homepage import bp_homepage
@@ -15,19 +16,14 @@ migrate = Migrate()
 csrf = CSRFProtect()
 
 
-
 def init_app():
     """Initialize the core application."""
     app = Flask(__name__, instance_relative_config=False)
-    # read config
     app.config.from_object(config.Config())
-    # initial Bootstrap5 for HTML
-    Bootstrap5(app)
-
     csrf.init_app(app)
+    bootstrap = Bootstrap5(app)
 
-
-    # Initialize db Plugins
+    # Initialize Plugins
     db.init_app(app)
     migrate.init_app(app, db)
 
